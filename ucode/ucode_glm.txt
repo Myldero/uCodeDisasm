@@ -4766,8 +4766,7 @@ U0ca0: 0c6b23000030      SYNCWAIT-> WRSEGFLD(tmp0, SS, BASE)
            0a2d3d48                 SEQW URET0
 ------------------------------------------------------------------------------------
 U0ca1: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           0a2d3d48                 SEQW GOTO U2d3d
-------------------------------------------------------------------------------------
+           0a2d3d48                 ? SEQW GOTO U2d3d
 U0ca2: 000c7cbbe248                 tmp14:= SAVEUIP(0x01, U2e7c)
 
 U0ca4: 000800000000                 NOP
@@ -5570,8 +5569,7 @@ U0f3e: 0e7d00035033                 STADSTGBUF_DSZ64_ASZ16_SC1(tmp3, tmp5)
 U0f40: 000020033cc8                 tmp3:= ADD_DSZ32(0x00000020, tmp3)
 U0f41: 29a2a5180635                 MOVETOCREG_SHR_DSZ64(tmp5, 0x00000020, 0x6a5)
 U0f42: 01600103c23c      SYNCWAIT-> tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           0b0f3980                 SEQW GOTO U0f39
-------------------------------------------------------------------------------------
+           0b0f3980                 ? SEQW GOTO U0f39
 
 U0f44: 00050103cc08                 tmp12:= SUB_DSZ32(0x00000001, tmp0)
 U0f45: 01420e000f00      SYNCFULL-> UFLOWCTRL(MSLOOPCTR, tmp12)
@@ -5604,8 +5602,7 @@ U0f5e: 204200000c31                 MOVETOCREG_DSZ64(tmp1, tmp0)
 U0f60: 013000037df5                 tmp7:= SELECTCC_DSZ32_CONDNZ(tmp5, tmp7)
 U0f61: 013000031c75                 tmp1:= SELECTCC_DSZ32_CONDNZ(tmp5, tmp1)
 U0f62: 01600103c23c      SYNCWAIT-> tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           0b0f5180                 SEQW GOTO U0f51
-------------------------------------------------------------------------------------
+           0b0f5180                 ? SEQW GOTO U0f51
 
 U0f64: 2042a1180200                 MOVETOCREG_DSZ64(0x00000000, 0x6a1)
            019ea600                 SEQW GOTO patch_runs_load_loop
@@ -8621,8 +8618,7 @@ U19b2: 000020033cc8                 tmp3:= ADD_DSZ32(0x00000020, tmp3)
 U19b4: 2042a4180235                 MOVETOCREG_DSZ64(tmp5, 0x6a4)
 U19b5: 29a2a4d803f5                 MOVETOCREG_SHR_DSZ64(tmp5, 0x0000001f, 0x6a4)
 U19b6: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           0199ad80                 SEQW GOTO U19ad
-------------------------------------------------------------------------------------
+           0199ad80                 ? SEQW GOTO U19ad
 
 U19b8: 2042a1180200                 MOVETOCREG_DSZ64(0x00000000, 0x6a1)
            019ea600                 SEQW GOTO patch_runs_load_loop
@@ -8669,8 +8665,7 @@ U19da: 004100036df6                 tmp6:= OR_DSZ64(tmp6, tmp7)
 
 U19dc: 204200000cf6                 MOVETOCREG_DSZ64(tmp6, tmp3)
 U19dd: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           0199d540                 SEQW GOTO U19d5
-------------------------------------------------------------------------------------
+           0199d540                 ? SEQW GOTO U19d5
 U19de: 0008c03b100d                 tmp1:= ZEROEXT_DSZ32(0x0000aec0)
 
 U19e0: 100a00000280                 TESTUSTATE(SYS, 0x4000)
@@ -8830,12 +8825,12 @@ U1a56: 092830f80236      SYNCFULL-> CMPUJZ_DIRECT_NOTTAKEN(tmp6, 0x00000003, U0e
 U1a58: 0cc608e38c66      SYNCWAIT-> tmp8:= unk_cc6(rsi, tmp1)
 U1a59: 0cce08a38c67                 tmp8:= unk_cce(rdi, tmp1)
 U1a5a: 016001834234        MSLOOP-> tmp4:= SUBR_DSZ64(tmp4, IMM_MACRO_01)
+           0a1a60e6                 ? SEQW GOTO U1a60
 
 U1a5c: 0cc608e38c66                 tmp8:= unk_cc6(rsi, tmp1)
 U1a5d: 0cce08a38c67                 tmp8:= unk_cce(rdi, tmp1)
 U1a5e: 016001034234        MSLOOP-> tmp4:= SUBR_DSZ64(tmp4, 0x00000001)
-           019a58a6                 SEQW GOTO U1a58
-------------------------------------------------------------------------------------
+           019a58a6                 ? SEQW GOTO U1a58
 
 U1a60: 10850003f034                 tmp15:= SUB_DSZN(tmp4)
 U1a61: 00240403f23f                 tmp15:= SHL_DSZ32(tmp15, 0x00000004)
@@ -9103,8 +9098,7 @@ U1b3a: 0ccc00608030     LFNCEWAIT-> tmp0:= unk_ccc(tmp0)
 U1b3c: 04b41183f208                 tmm7:= FMOV(0x00000011)
 U1b3d: 10800a030230                 tmp0:= ADD_DSZN(tmp0, 0x0000000a)
 U1b3e: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           019b3a80                 SEQW GOTO U1b3a
-------------------------------------------------------------------------------------
+           019b3a80                 ? SEQW GOTO U1b3a
 
 U1b40: 2042fe1c0232                 MOVETOCREG_DSZ64(tmp2, CORE_CR_EFLAGS)
            02807800                 SEQW GOTO U0078
@@ -9142,8 +9136,7 @@ U1b5a: 0cf700608035     LFNCEWAIT-> tmp0:= unk_cf7(tmp5)
 U1b5c: 04b41183f208                 tmm7:= FMOV(0x00000011)
 U1b5d: 10800a035235                 tmp5:= ADD_DSZN(tmp5, 0x0000000a)
 U1b5e: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           019b5a80                 SEQW GOTO U1b5a
-------------------------------------------------------------------------------------
+           019b5a80                 ? SEQW GOTO U1b5a
 
 U1b60: 2042fe1c0232                 MOVETOCREG_DSZ64(tmp2, CORE_CR_EFLAGS)
            04aba500                 SEQW GOTO U2ba5
@@ -9335,11 +9328,11 @@ U1bf6: 000c8e9b1200                 tmp1:= SAVEUIP(0x01, U068e)
 U1bf8: 01420b000f80                 UFLOWCTRL(URET1, tmp14)
 U1bf9: 1c0808a20c67      SYNCWAIT-> STAD_DSZN_ASZ32_SC1(rdi, tmp1, IMM_MACRO_ALIAS_MSLOOPCTR, mode=0x08, rax)
 U1bfa: 016001834234        MSLOOP-> tmp4:= SUBR_DSZ64(tmp4, IMM_MACRO_01)
+           0a9bfee6                 ? SEQW GOTO U1bfe
 
 U1bfc: 1c0808a20c67                 STAD_DSZN_ASZ32_SC1(rdi, tmp1, IMM_MACRO_ALIAS_MSLOOPCTR, mode=0x08, rax)
 U1bfd: 016001034234        MSLOOP-> tmp4:= SUBR_DSZ64(tmp4, 0x00000001)
-           019bf965                 SEQW GOTO U1bf9
-------------------------------------------------------------------------------------
+           019bf965                 ? SEQW GOTO U1bf9
 U1bfe: 10850003f034                 tmp15:= SUB_DSZN(tmp4)
 
 U1c00: 00240003fcbf                 tmp15:= SHL_DSZ32(tmp15, tmp2)
@@ -9509,8 +9502,7 @@ U1c8e: 0044000384f8                 tmp8:= AND_DSZ64(tmp8, tmp7)
 U1c90: 01513e200238                 UJMPCC_DIRECT_NOTTAKEN_CONDNZ(tmp8, U083e)
 U1c91: 000008036d88     LFNCEMARK-> tmp6:= ADD_DSZ32(0x00000008, tmp6)
 U1c92: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           049c8a80                 SEQW GOTO U1c8a
-------------------------------------------------------------------------------------
+           049c8a80                 ? SEQW GOTO U1c8a
 
 U1c94: 004240140233     LFNCEWAIT-> MOVETOCREG_DSZ64(tmp3, 0x540)
 U1c95: 004241140232                 MOVETOCREG_DSZ64(tmp2, 0x541)
@@ -9579,8 +9571,7 @@ U1cc6: 00400003fcb9                 tmp15:= ADD_DSZ64(tmp9, tmp2)
 U1cc8: 000001039e48                 tmp9:= ADD_DSZ32(0x00000001, tmp9)
 U1cc9: 004200000ff8                 MOVETOCREG_DSZ64(tmp8, tmp15)
 U1cca: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           019cc080                 SEQW GOTO U1cc0
-------------------------------------------------------------------------------------
+           019cc080                 ? SEQW GOTO U1cc0
 
 U1ccc: 00480003c031                 tmp12:= ZEROEXT_DSZ64(tmp1)
 U1ccd: 000000000000                 NOP
@@ -12347,12 +12338,12 @@ U24fa: 10808003bec8                 tmp11:= ADD_DSZN(0x00000080, tmp11)
 U24fc: 10851003bec8                 tmp11:= SUB_DSZN(0x00000010, tmp11)
 U24fd: 0cdea060323b                 rdi:= unk_cde(tmp11, 0x000018a0)
 U24fe: 01600183c23c                 tmp12:= SUBR_DSZ64(tmp12, IMM_MACRO_01)
+           01a504c0                 ? SEQW GOTO U2504
 
 U2500: 10851003bec8                 tmp11:= SUB_DSZN(0x00000010, tmp11)
 U2501: 0cdea060323b                 rdi:= unk_cde(tmp11, 0x000018a0)
 U2502: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01a4fc80                 SEQW GOTO U24fc
-------------------------------------------------------------------------------------
+           01a4fc80                 ? SEQW GOTO U24fc
 
 U2504: 000800000000                 NOP
            01b7808c                 SEQW URET1
@@ -12370,12 +12361,12 @@ U250a: 10808003bec8                 tmp11:= ADD_DSZN(0x00000080, tmp11)
 U250c: 10851003bec8                 tmp11:= SUB_DSZN(0x00000010, tmp11)
 U250d: 0cd6a060323b                 rdi:= unk_cd6(tmp11, 0x000018a0)
 U250e: 01600183c23c                 tmp12:= SUBR_DSZ64(tmp12, IMM_MACRO_01)
+           01a514c0                 ? SEQW GOTO U2514
 
 U2510: 10851003bec8                 tmp11:= SUB_DSZN(0x00000010, tmp11)
 U2511: 0cd6a060323b                 rdi:= unk_cd6(tmp11, 0x000018a0)
 U2512: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01a50c80                 SEQW GOTO U250c
-------------------------------------------------------------------------------------
+           01a50c80                 ? SEQW GOTO U250c
 
 U2514: 000000000000                 NOP
            01c8644c                 SEQW URET1
@@ -12466,12 +12457,12 @@ U2556: 01420b000f80                 UFLOWCTRL(URET1, tmp14)
 U2558: 1c0008e30c66      SYNCWAIT-> tmp0:= LDZX_DSZN_ASZ32_SC1(rsi, tmp1, IMM_MACRO_ALIAS_MSLOOPCTR, mode=0x18)
 U2559: 1c0808a30c67                 STAD_DSZN_ASZ32_SC1(rdi, tmp1, IMM_MACRO_ALIAS_MSLOOPCTR, mode=0x08, tmp0)
 U255a: 016001834234        MSLOOP-> tmp4:= SUBR_DSZ64(tmp4, IMM_MACRO_01)
+           0a2560e6                 ? SEQW GOTO U2560
 
 U255c: 1c0008e30c66                 tmp0:= LDZX_DSZN_ASZ32_SC1(rsi, tmp1, IMM_MACRO_ALIAS_MSLOOPCTR, mode=0x18)
 U255d: 1c0808a30c67                 STAD_DSZN_ASZ32_SC1(rdi, tmp1, IMM_MACRO_ALIAS_MSLOOPCTR, mode=0x08, tmp0)
 U255e: 016001034234        MSLOOP-> tmp4:= SUBR_DSZ64(tmp4, 0x00000001)
-           01a558a6                 SEQW GOTO U2558
-------------------------------------------------------------------------------------
+           01a558a6                 ? SEQW GOTO U2558
 
 U2560: 10850003f034                 tmp15:= SUB_DSZN(tmp4)
 U2561: 00240003fcbf                 tmp15:= SHL_DSZ32(tmp15, tmp2)
@@ -12632,8 +12623,7 @@ U25d2: 0d0f00039038     LFNCEMARK-> PORTOUT_DSZ32_ASZ16_SC1(tmp8, tmp9)
 
 U25d4: 00400c034d08     LFNCEWAIT-> tmp4:= ADD_DSZ64(0x0000000c, tmp4)
 U25d5: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           0225c940                 SEQW GOTO U25c9
-------------------------------------------------------------------------------------
+           0225c940                 ? SEQW GOTO U25c9
 U25d6: 000800000000                 NOP
 
 U25d8: 2d0f40000008                 PORTOUT_DSZ32_ASZ16_SC1(FUNNYIO_CR_UNCORE_MUTEX, 0x00000000)
@@ -12652,8 +12642,7 @@ U25e2: 0d4f00039038     LFNCEMARK-> PORTOUT_DSZ64_ASZ16_SC1(tmp8, tmp9)
 
 U25e4: 004014034d08     LFNCEWAIT-> tmp4:= ADD_DSZ64(0x00000014, tmp4)
 U25e5: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           0225d940                 SEQW GOTO U25d9
-------------------------------------------------------------------------------------
+           0225d940                 ? SEQW GOTO U25d9
 U25e6: 000800000000                 NOP
 
 U25e8: 2d0f40000008                 PORTOUT_DSZ32_ASZ16_SC1(FUNNYIO_CR_UNCORE_MUTEX, 0x00000000)
@@ -13926,8 +13915,7 @@ U29c2: 000e3f000200                 WRMSLOOPCTRFBR(0x0000003f)
 U29c4: 00085f032008                 tmp2:= ZEROEXT_DSZ32(0x0000005f)
 U29c5: 004200000c80                 MOVETOCREG_DSZ64(tmp2, 0x00000000)
 U29c6: 016001032232                 tmp2:= SUBR_DSZ64(tmp2, 0x00000001)
-           01a9c580                 SEQW GOTO U29c5
-------------------------------------------------------------------------------------
+           01a9c580                 ? SEQW GOTO U29c5
 
 U29c8: 004209000200                 MOVETOCREG_DSZ64(0x00000000, 0x009)
 U29c9: 0000a073cfc8                 tmp12:= ADD_DSZ32(0x00001ca0, tmp15)
@@ -14507,8 +14495,7 @@ U2b9e: 0005ff3f3cc8                 tmp3:= SUB_DSZ32(0x00000fff, tmp3)
 U2ba0: 015044180233                 UJMPCC_DIRECT_NOTTAKEN_CONDZ(tmp3, U0644)
 U2ba1: 000001032c88      SYNCFULL-> tmp2:= ADD_DSZ32(0x00000001, tmp2)
 U2ba2: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           08ab9280                 SEQW GOTO U2b92
-------------------------------------------------------------------------------------
+           08ab9280                 ? SEQW GOTO U2b92
 
 U2ba4: 000000000000                 NOP
            019ea600                 SEQW GOTO patch_runs_load_loop
@@ -14598,8 +14585,7 @@ U2be2: 004400037df5                 tmp7:= AND_DSZ64(tmp5, tmp7)
 U2be4: 004100036df6                 tmp6:= OR_DSZ64(tmp6, tmp7)
 U2be5: 204300000cf6                 WRITEURAM(tmp6, tmp3)
 U2be6: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01abde80                 SEQW GOTO U2bde
-------------------------------------------------------------------------------------
+           01abde80                 ? SEQW GOTO U2bde
 
 U2be8: 000000000000                 NOP
            019ea600                 SEQW GOTO patch_runs_load_loop
@@ -15139,8 +15125,7 @@ U2d82: 2929951d0c35                 CMPUJNZ_DIRECT_NOTTAKEN(tmp5, tmp0, rsa_sign
 
 U2d84: 004008032c88                 tmp2:= ADD_DSZ64(0x00000008, tmp2)
 U2d85: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01ad8140                 SEQW GOTO U2d81
-------------------------------------------------------------------------------------
+           01ad8140                 ? SEQW GOTO U2d81
 U2d86: 002173030c10                 tmp0:= CONCAT_DSZ32(0x0001ffff, tmp0)
 
 U2d88: 0e65f8035237                 tmp5:= LDPPHYSTICKLE_DSZ64_ASZ64_SC1(tmp7, 0x000000f8)
@@ -15154,8 +15139,7 @@ U2d8e: 0e6500031cb7                 tmp1:= LDPPHYSTICKLE_DSZ64_ASZ64_SC1(tmp7, t
 U2d90: 2929951d0c70                 CMPUJNZ_DIRECT_NOTTAKEN(tmp0, tmp1, rsa_signing_error)
 U2d91: 004008032c88                 tmp2:= ADD_DSZ64(0x00000008, tmp2)
 U2d92: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01ad8d80                 SEQW GOTO U2d8d
-------------------------------------------------------------------------------------
+           01ad8d80                 ? SEQW GOTO U2d8d
 
 U2d94: 03380003f000                 tmp15:= CLC(0x00000000)
            01d79600                 SEQW GOTO U5796
@@ -15294,8 +15278,7 @@ U2e02: 304200000cf6                 MOVETOCREG_DSZ64(tmp6, tmp3)
 
 U2e04: 396289480200                 MOVETOCREG_BTS_DSZ64(0x00000001, 0x289)
 U2e05: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01adfa40                 SEQW GOTO U2dfa
-------------------------------------------------------------------------------------
+           01adfa40                 ? SEQW GOTO U2dfa
 U2e06: 000800000000                 NOP
 
 U2e08: 000000000000                 NOP
@@ -15905,8 +15888,7 @@ U2ff6: 0cf73060803b     LFNCEMARK-> tmp0:= unk_cf7(tmp11)
 U2ff8: 04b41183b208                 tmm3:= FMOV(0x00000011)
 U2ff9: 10802003b23b                 tmp11:= ADD_DSZN(tmp11, 0x00000020)
 U2ffa: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01aff480                 SEQW GOTO U2ff4
-------------------------------------------------------------------------------------
+           01aff480                 ? SEQW GOTO U2ff4
 
 U2ffc: 021e03000200                 SIGEVENT(0x00000003)
 U2ffd: 00428c10023a    LFNCEWTMRK-> MOVETOCREG_DSZ64(tmp10, 0x48c)
@@ -16490,11 +16472,11 @@ U318e: 000e0f03c208                 tmp12:= WRMSLOOPCTRFBR(0x0000000f)
 U3190: 01080003d010                 tmp13:= READUIP_REGOVR(0x00)
 U3191: 0f6d00043f31                 unk_f6d(tmp1, tmp12, rdi)
 U3192: 01600183c23c                 tmp12:= SUBR_DSZ64(tmp12, IMM_MACRO_01)
+           01b196c0                 ? SEQW GOTO U3196
 
 U3194: 0f6d00043f31                 unk_f6d(tmp1, tmp12, rdi)
 U3195: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01b19140                 SEQW GOTO U3191
-------------------------------------------------------------------------------------
+           01b19140                 ? SEQW GOTO U3191
 U3196: 014800000000                 URET(0x00)
 ------------------------------------------------------------------------------------
 
@@ -16507,11 +16489,11 @@ U319a: 000e0f03c208                 tmp12:= WRMSLOOPCTRFBR(0x0000000f)
 U319c: 01080083e010                 tmp14:= READUIP_REGOVR(0x01)
 U319d: 0f6500043f30                 rdi:= LDPPHYSTICKLE_DSZ64_ASZ32_SC1(tmp0, tmp12)
 U319e: 01600183c23c                 tmp12:= SUBR_DSZ64(tmp12, IMM_MACRO_01)
+           01b1a2c0                 ? SEQW GOTO U31a2
 
 U31a0: 0f6500043f30                 rdi:= LDPPHYSTICKLE_DSZ64_ASZ32_SC1(tmp0, tmp12)
 U31a1: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01b19d40                 SEQW GOTO U319d
-------------------------------------------------------------------------------------
+           01b19d40                 ? SEQW GOTO U319d
 U31a2: 014800800000                 URET(0x01)
 ------------------------------------------------------------------------------------
 
@@ -19294,11 +19276,11 @@ U3a06: 015d00000e80      SYNCFULL-> UJMP(tmp10)
 U3a08: 000000000000                 NOP
 U3a09: 0cce08a39c67      SYNCWAIT-> tmp9:= unk_cce(rdi, tmp1)
 U3a0a: 016001834234        MSLOOP-> tmp4:= SUBR_DSZ64(tmp4, IMM_MACRO_01)
+           0aba2ae6                 ? SEQW GOTO U3a2a
 
 U3a0c: 0cce08a39c67                 tmp9:= unk_cce(rdi, tmp1)
 U3a0d: 016001034234        MSLOOP-> tmp4:= SUBR_DSZ64(tmp4, 0x00000001)
-           01ba2565                 SEQW GOTO U3a25
-------------------------------------------------------------------------------------
+           01ba2565                 ? SEQW GOTO U3a25
 U3a0e: 10850003f034                 tmp15:= SUB_DSZN(tmp4)
 
 U3a10: 00240403f23f                 tmp15:= SHL_DSZ32(tmp15, 0x00000004)
@@ -19328,11 +19310,11 @@ U3a22: 0c4b800f8000                 tmp8:= RDSEGFLD(SS, SEL)
 U3a24: 000000000000                 NOP
 U3a25: 0cce08a39c67      SYNCWAIT-> tmp9:= unk_cce(rdi, tmp1)
 U3a26: 016001834234        MSLOOP-> tmp4:= SUBR_DSZ64(tmp4, IMM_MACRO_01)
+           0aba2ae6                 ? SEQW GOTO U3a2a
 
 U3a28: 0cce08a39c67                 tmp9:= unk_cce(rdi, tmp1)
 U3a29: 016001034234        MSLOOP-> tmp4:= SUBR_DSZ64(tmp4, 0x00000001)
-           01ba2565                 SEQW GOTO U3a25
-------------------------------------------------------------------------------------
+           01ba2565                 ? SEQW GOTO U3a25
 U3a2a: 10850003f034                 tmp15:= SUB_DSZN(tmp4)
 
 U3a2c: 00240403f23f                 tmp15:= SHL_DSZ32(tmp15, 0x00000004)
@@ -19619,8 +19601,7 @@ U3b0a: 04b41183b208                 tmm3:= FMOV(0x00000011)
 
 U3b0c: 10801003bec8                 tmp11:= ADD_DSZN(0x00000010, tmp11)
 U3b0d: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01bb0840                 SEQW GOTO U3b08
-------------------------------------------------------------------------------------
+           01bb0840                 ? SEQW GOTO U3b08
 U3b0e: 021e03000200                 SIGEVENT(0x00000003)
 
 U3b10: 10858003bec8                 tmp11:= SUB_DSZN(0x00000080, tmp11)
@@ -19911,8 +19892,7 @@ U3bf6: 004400037df5                 tmp7:= AND_DSZ64(tmp5, tmp7)
 U3bf8: 004100036df6                 tmp6:= OR_DSZ64(tmp6, tmp7)
 U3bf9: 0e7d00036033                 STADSTGBUF_DSZ64_ASZ16_SC1(tmp3, tmp6)
 U3bfa: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01bbee80                 SEQW GOTO U3bee
-------------------------------------------------------------------------------------
+           01bbee80                 ? SEQW GOTO U3bee
 
 U3bfc: 000000000000                 NOP
            049ea600                 SEQW GOTO patch_runs_load_loop
@@ -20082,12 +20062,12 @@ U3c7e: 001416015215                 tmpv1:= BT_DSZ32(tmpv1, 0x00000016)
 U3c80: 0cc608e38c66      SYNCWAIT-> tmp8:= unk_cc6(rsi, tmp1)
 U3c81: 0c8e08a38c67                 tmp8:= unk_c8e(rdi, tmp1)
 U3c82: 016001834234        MSLOOP-> tmp4:= SUBR_DSZ64(tmp4, IMM_MACRO_01)
+           0a1a60e6                 ? SEQW GOTO U1a60
 
 U3c84: 0cc608e38c66                 tmp8:= unk_cc6(rsi, tmp1)
 U3c85: 0c8e08a38c67                 tmp8:= unk_c8e(rdi, tmp1)
 U3c86: 016001034234        MSLOOP-> tmp4:= SUBR_DSZ64(tmp4, 0x00000001)
-           019a58a6                 SEQW GOTO U1a58
-------------------------------------------------------------------------------------
+           019a58a6                 ? SEQW GOTO U1a58
 
 U3c88: 10850003f034                 tmp15:= SUB_DSZN(tmp4)
 U3c89: 00240403f23f                 tmp15:= SHL_DSZ32(tmp15, 0x00000004)
@@ -20304,8 +20284,7 @@ U3d41: 01420d038f78                 tmp8:= UFLOWCTRL(tmp8, LDAT_IN, tmp13)
 U3d42: 00802003ef88                 tmp14:= ADD_DSZ16(0x00000020, tmp14)
 
 U3d44: 01600103c23c      SYNCWAIT-> tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           0a3d4000                 SEQW GOTO U3d40
-------------------------------------------------------------------------------------
+           0a3d4000                 ? SEQW GOTO U3d40
 U3d45: 00652003e23e                 tmp14:= SHR_DSZ64(tmp14, 0x00000020)
 U3d46: 015d00000f80                 UJMP(tmp14)
 ------------------------------------------------------------------------------------
@@ -20341,8 +20320,7 @@ U3d5e: 000d518c0000                 SAVEUIP_REGOVR(0x01, U3d60, 0x0351)
 
 U3d60: 00000a034d08                 tmp4:= ADD_DSZ32(0x0000000a, tmp4)
 U3d61: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01bd5240                 SEQW GOTO U3d52
-------------------------------------------------------------------------------------
+           01bd5240                 ? SEQW GOTO U3d52
 U3d62: 000800000000                 NOP
 
 U3d64: 000000000000                 NOP
@@ -23219,8 +23197,7 @@ U45aa: 004008034d08                 tmp4:= ADD_DSZ64(0x00000008, tmp4)
 U45ac: 0e7d00031032                 STADSTGBUF_DSZ64_ASZ16_SC1(tmp2, tmp1)
 U45ad: 004020032c88                 tmp2:= ADD_DSZ64(0x00000020, tmp2)
 U45ae: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01c5a980                 SEQW GOTO U45a9
-------------------------------------------------------------------------------------
+           01c5a980                 ? SEQW GOTO U45a9
 
 U45b0: 000000000000                 NOP
            091ea600                 SEQW GOTO patch_runs_load_loop
@@ -23822,8 +23799,7 @@ U47bd: 0e6d08872035                 STADPPHYSTICKLE_DSZ64_ASZ64_SC1(tmp5, IMM_MA
 U47be: 000800003000                 rdi:= ZEROEXT_DSZ32(0x00000000)
 
 U47c0: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01c7bc00                 SEQW GOTO U47bc
-------------------------------------------------------------------------------------
+           01c7bc00                 ? SEQW GOTO U47bc
 U47c1: 0e651007bc48                 tmp11:= LDPPHYSTICKLE_DSZ64_ASZ64_SC1(tmp1, 0x00000010, mode=0x01)
 U47c2: 0e6d00040eca                 STADPPHYSTICKLE_DSZ64_ASZ64_SC1(tmp11, 0x00000200, mode=0x01, 0x00000000)
 
@@ -24184,11 +24160,11 @@ U48fe: 000e3f000200                 WRMSLOOPCTRFBR(0x0000003f)
 U4900: 00085f032008                 tmp2:= ZEROEXT_DSZ32(0x0000005f)
 U4901: 004200000c80     LFNCEWAIT-> MOVETOCREG_DSZ64(tmp2, 0x00000000)
 U4902: 016001832232                 tmp2:= SUBR_DSZ64(tmp2, IMM_MACRO_01)
+           02c906c0                 ? SEQW GOTO U4906
 
 U4904: 004200000c80                 MOVETOCREG_DSZ64(tmp2, 0x00000000)
 U4905: 016001032232                 tmp2:= SUBR_DSZ64(tmp2, 0x00000001)
-           01c90140                 SEQW GOTO U4901
-------------------------------------------------------------------------------------
+           01c90140                 ? SEQW GOTO U4901
 U4906: 004209000200                 MOVETOCREG_DSZ64(0x00000000, 0x009)
 
 U4908: 0062fe1fa200                 tmp10:= MOVEFROMCREG_DSZ64(CORE_CR_EFLAGS)
@@ -25236,8 +25212,7 @@ U4ca2: 0c400863a238                 tmp10:= LDZX_DSZ64_ASZ32_SC1(tmp8, 0x0000000
 U4ca4: 004100037dfa                 tmp7:= OR_DSZ64(tmp10, tmp7)
 U4ca5: 004010038e08                 tmp8:= ADD_DSZ64(0x00000010, tmp8)
 U4ca6: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01cca080                 SEQW GOTO U4ca0
-------------------------------------------------------------------------------------
+           01cca080                 ? SEQW GOTO U4ca0
 
 U4ca8: 0151111c0277                 UJMPCC_DIRECT_NOTTAKEN_CONDNZ(tmp7, generate_#GP)
 U4ca9: 005403032232                 tmp2:= BT_DSZ64(tmp2, 0x00000003)
@@ -25826,8 +25801,7 @@ U4eb2: 0f6d50035f3b                 unk_f6d(tmp11, tmp12, tmp5)
 U4eb4: 0c4b206f5000                 tmp5:= RDSEGFLD(UNK_SEG_1b, BASE)
 U4eb5: 0f6d00035f3b                 unk_f6d(tmp11, tmp12, tmp5)
 U4eb6: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01ceb180                 SEQW GOTO U4eb1
-------------------------------------------------------------------------------------
+           01ceb180                 ? SEQW GOTO U4eb1
 
 U4eb8: 0062f61f5200                 tmp5:= MOVEFROMCREG_DSZ64(CORE_CR_CR0)
 U4eb9: 0e6d90035e48                 STADPPHYSTICKLE_DSZ64_ASZ64_SC1(tmp9, 0x00000090, tmp5)
@@ -27642,8 +27616,7 @@ U554a: 000004038e08                 tmp8:= ADD_DSZ32(0x00000004, tmp8)
 
 U554c: 000010039e48                 tmp9:= ADD_DSZ32(0x00000010, tmp9)
 U554d: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01d53640                 SEQW GOTO U5536
-------------------------------------------------------------------------------------
+           01d53640                 ? SEQW GOTO U5536
 U554e: 00480003c036                 tmp12:= ZEROEXT_DSZ64(tmp6)
 
 U5550: 000c78d3e248                 tmp14:= SAVEUIP(0x01, U3478)
@@ -27675,8 +27648,7 @@ U5562: 0e7d00035033                 STADSTGBUF_DSZ64_ASZ16_SC1(tmp3, tmp5)
 U5564: 000020033cc8                 tmp3:= ADD_DSZ32(0x00000020, tmp3)
 U5565: 004008034d08                 tmp4:= ADD_DSZ64(0x00000008, tmp4)
 U5566: 01600103c23c      SYNCWAIT-> tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           0b555e80                 SEQW GOTO U555e
-------------------------------------------------------------------------------------
+           0b555e80                 ? SEQW GOTO U555e
 
 U5568: 2042a1180200                 MOVETOCREG_DSZ64(0x00000000, 0x6a1)
            08a1624c                 SEQW URET1
@@ -28376,8 +28348,7 @@ U57ce: 01519c5c027f                 UJMPCC_DIRECT_NOTTAKEN_CONDNZ(tmp15, U379c)
 
 U57d0: 004200000cf1     LFNCEMARK-> MOVETOCREG_DSZ64(tmp1, tmp3)
 U57d1: 01600183c23c                 tmp12:= SUBR_DSZ64(tmp12, IMM_MACRO_01)
-           040000cd                 SEQW URET1
-------------------------------------------------------------------------------------
+           040000cd                 ? SEQW URET1
 U57d2: 000001033cc8                 tmp3:= ADD_DSZ32(0x00000001, tmp3)
 
 U57d4: 004008032c88                 tmp2:= ADD_DSZ64(0x00000008, tmp2)
@@ -31791,8 +31762,7 @@ U625d: 0d4f0003103a                 PORTOUT_DSZ64_ASZ16_SC1(tmp10, tmp1)
 U625e: 00450803ae88                 tmp10:= SUB_DSZ64(0x00000008, tmp10)
 
 U6260: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01e25c00                 SEQW GOTO U625c
-------------------------------------------------------------------------------------
+           01e25c00                 ? SEQW GOTO U625c
 U6261: 2d4be033300a                 tmp3:= PORTIN_DSZ64_ASZ16_SC1(B_CR_EMRR_MASK)
 U6262: 004100233cc8                 tmp3:= OR_DSZ64(0x00000800, tmp3)
 
@@ -33955,8 +33925,7 @@ U69c6: 0e6d00031c36                 STADPPHYSTICKLE_DSZ64_ASZ64_SC1(tmp6, tmp0, 
 
 U69c8: 004008030c08                 tmp0:= ADD_DSZ64(0x00000008, tmp0)
 U69c9: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01e9c440                 SEQW GOTO U69c4
-------------------------------------------------------------------------------------
+           01e9c440                 ? SEQW GOTO U69c4
 U69ca: 00480003a035                 tmp10:= ZEROEXT_DSZ64(tmp5)
 
 U69cc: 000804039008                 tmp9:= ZEROEXT_DSZ32(0x00000004)
@@ -34501,8 +34470,7 @@ U6bae: 002508013213                 tmp7:= SHR_DSZ32(tmp7, 0x00000008)
 
 U6bb0: 0004fc7d34cf                 tmp7:= AND_DSZ32(0x0000fffc, tmp7)
 U6bb1: 016001034234                 tmp4:= SUBR_DSZ64(tmp4, 0x00000001)
-           01ebaa40                 SEQW GOTO U6baa
-------------------------------------------------------------------------------------
+           01ebaa40                 ? SEQW GOTO U6baa
 U6bb2: 00210a0b7dd0                 tmp7:= CONCAT_DSZ32(0xaa000000, tmp7)
 
 U6bb4: 006320038200                 tmp8:= READURAM(FSCP_CR_WHO_AM_I_INFO, 64)
@@ -34665,8 +34633,7 @@ U6c41: 072c0003403f                 tmp4:= PINTMOVDTMM2I_DSZ32(tmm7)
 U6c42: 000100036db4                 tmp6:= OR_DSZ32(tmp4, tmp6)
 
 U6c44: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01ec3c00                 SEQW GOTO U6c3c
-------------------------------------------------------------------------------------
+           01ec3c00                 ? SEQW GOTO U6c3c
 U6c45: 00ac00036e36                 tmp6:= ROL_DSZ16(tmp6, tmp8)
 U6c46: 00a1ff7fae9f                 tmp10:= CONCAT_DSZ16(0xffffffffffffffff, tmp10)
 
@@ -36822,8 +36789,7 @@ U7402: 237e00030c79                 tmp0:= unk_37e(tmp9, tmp1)
 U7404: 0e6d00030cb7                 STADPPHYSTICKLE_DSZ64_ASZ64_SC1(tmp7, tmp2, tmp0)
 U7405: 004008032c88                 tmp2:= ADD_DSZ64(0x00000008, tmp2)
 U7406: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01f40080                 SEQW GOTO U7400
-------------------------------------------------------------------------------------
+           01f40080                 ? SEQW GOTO U7400
 
 U7408: 0151165002f4                 UJMPCC_DIRECT_NOTTAKEN_CONDNZ(tmp4, U7416)
 U7409: 0052165002f0                 UJMPCC_DIRECT_NOTTAKEN_CONDB(tmp0, U7416)
@@ -36839,8 +36805,7 @@ U7412: 0e6d00030cb7                 STADPPHYSTICKLE_DSZ64_ASZ64_SC1(tmp7, tmp2, 
 
 U7414: 004008032c88                 tmp2:= ADD_DSZ64(0x00000008, tmp2)
 U7415: 01600103c23c                 tmp12:= SUBR_DSZ64(tmp12, 0x00000001)
-           01f40e40                 SEQW GOTO U740e
-------------------------------------------------------------------------------------
+           01f40e40                 ? SEQW GOTO U740e
 U7416: 006346038200                 tmp8:= READURAM(0x0046, 64)
 
 U7418: 00632c039200                 tmp9:= READURAM(0x002c, 64)

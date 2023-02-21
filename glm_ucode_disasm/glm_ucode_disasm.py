@@ -874,9 +874,9 @@ def is_uop_uaddr_imm(uop):
     other_opcodes = [0x15d, 0x15f]
     return (opcode & 0x0ff) in ujmpcc_opcodes or opcode in other_opcodes
 
-def is_uop_testustate(uop):
+def is_uop_test(uop):
     opcode = get_uop_opcode(uop)
-    return (opcode & 0xf3f) == 0x00a
+    return (opcode & 0xf3f) == 0x00a or opcode == 0x160
 
 def get_str_uaddr(uaddr):
     if uaddr in g_uop_lables:
@@ -1079,7 +1079,7 @@ def process_seqword(uaddr, uop, seqword, before_uop):
     assert(uop_ctrl_uidx == 0 or uop_ctrl != 0)
     
     opcode = get_uop_opcode(uop)
-    is_testustate_uop = is_uop_testustate(uop)
+    is_test_uop = is_uop_test(uop)
     uidx = uaddr & 0x03
     assert(uidx != 0x03)
     after_uop = not before_uop
@@ -1089,27 +1089,27 @@ def process_seqword(uaddr, uop, seqword, before_uop):
     if uop_ctrl_uidx == uidx and after_uop:
         if uop_ctrl in uret_uop_ctrls:
             assert(tetrad_ctrl_uidx != uidx)
-            str_cond = "? " if is_testustate_uop else ""
+            str_cond = "? " if is_test_uop else ""
             res = str_cond + "SEQW URET%i" % (uop_ctrl - 2),
-            exec_flow_stop = not is_testustate_uop
+            exec_flow_stop = not is_test_uop
         elif uop_ctrl in uend_uop_ctrls:
             assert(tetrad_ctrl_uidx != uidx and opcode != 0x00a)
             res = "SEQW UEND%i" % (uop_ctrl - 0xc),
             exec_flow_stop = True
         elif uop_ctrl in save_uip_uop_ctrls:
-            str_cond = "? " if is_testustate_uop else ""
+            str_cond = "? " if is_test_uop else ""
             next_uaddr = uaddr + (2 if uaddr & 3 == 2 else 1)
             res = str_cond + "SEQW SAVEUIP%i U%04x" % ((uop_ctrl & 1), next_uaddr),
     
-    special_tetrad_ctrl_case = uidx == 2 and tetrad_ctrl_uidx == 3 and is_testustate_uop and \
+    special_tetrad_ctrl_case = uidx == 2 and tetrad_ctrl_uidx == 3 and is_test_uop and \
         (uop_ctrl_uidx != 2 or (uop_ctrl not in exec_flow_uop_ctrls))
     if (tetrad_ctrl_uidx == uidx or special_tetrad_ctrl_case) and after_uop:
         assert(special_tetrad_ctrl_case or uop_ctrl_uidx != uidx or \
                uop_ctrl == 0 or uop_ctrl not in exec_flow_uop_ctrls)
         
-        str_cond = "? " if is_testustate_uop else ""
+        str_cond = "? " if is_test_uop else ""
         res += str_cond + "SEQW GOTO " + get_str_uaddr(tetrad_ctrl_next_uaddr),
-        exec_flow_stop = not is_testustate_uop and opcode != 0x00d and \
+        exec_flow_stop = not is_test_uop and opcode != 0x00d and \
             (uop_ctrl_uidx != uidx or uop_ctrl not in save_uip_uop_ctrls)
     
     if uop_ctrl_uidx == uidx and uop_ctrl in save_uip_reg_ovr_uop_ctrls and before_uop:
@@ -1171,14 +1171,14 @@ def idq_test():
         for str_idq_uop, str_idq_imm in zip(str_idq_uops, str_idq_imms))
 
 def msrom_disasm(arrays_dump_dir):
-    ucode = load_ms_array_str_data(arrays_dump_dir + "\\ms_array0.txt")
-    msrom_seqwords = load_ms_array_str_data(arrays_dump_dir + "\\ms_array1.txt")
+    ucode = load_ms_array_str_data(os.path.join(arrays_dump_dir, "ms_array0.txt"))
+    msrom_seqwords = load_ms_array_str_data(os.path.join(arrays_dump_dir, "ms_array1.txt"))
     assert(len(ucode) == len(msrom_seqwords))
-    msram_seqwords = load_ms_array_str_data(arrays_dump_dir + "\\ms_array2.txt")
-    match_patch_regs = load_ms_array_str_data(arrays_dump_dir + "\\ms_array3.txt")
+    msram_seqwords = load_ms_array_str_data(os.path.join(arrays_dump_dir, "ms_array2.txt"))
+    match_patch_regs = load_ms_array_str_data(os.path.join(arrays_dump_dir, "ms_array3.txt"))
     match_patch_data, patch_match_data = process_match_patch_regs(match_patch_regs)
     
-    msram = load_ms_array_str_data(arrays_dump_dir + "\\ms_array4.txt")
+    msram = load_ms_array_str_data(os.path.join(arrays_dump_dir, "ms_array4.txt"))
     msram_ucode = process_msram_uops(msram)
     if len(ucode) > 0x7c00:
         ucode = ucode[0: 0x7c00]
@@ -1230,7 +1230,7 @@ def msrom_disasm(arrays_dump_dir):
         if opcode in stop_exec_flow_opcodes:
             str_disasm += str_exec_flow_delim + "\n"
     
-    fo = open(arrays_dump_dir + "\\ucode_glm.txt", "w")
+    fo = open(os.path.join(arrays_dump_dir, "ucode_glm.txt"), "w")
     fo.write(str_disasm)
     fo.close()
 
