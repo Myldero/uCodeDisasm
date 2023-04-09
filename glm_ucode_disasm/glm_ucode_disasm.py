@@ -43,11 +43,11 @@ g_src_mnem = (
  ("", ""),              # 0x00
  ("r64dst", "xmmdst"),  # 0x01
  ("r64src", "xmmsrc"),  # 0x02
- ("rdi", "xmm7"),       # 0x03
+ ("rdiUNK", "xmm7"),    # 0x03
  ("r64base", ""),       # 0x04
  ("r64idx", ""),        # 0x05
- ("rdx", "xmm2"),       # 0x06
- ("rdx", "xmm2"),       # 0x07
+ ("rUNK", "xmm2"),      # 0x06
+ ("r64dst", "xmm2"),    # 0x07
  ("", ""),              # 0x08
  ("", ""),              # 0x09
  ("", ""),              # 0x0a
@@ -77,12 +77,12 @@ g_src_mnem += g_idq_src_dst_mnem
 g_dst_mnem = (
  ("", ""),              # 0x00
  ("r64dst", "xmm2"),    # 0x01
- ("rax", "xmm0"),       # 0x02
- ("rdi", "xmm7"),       # 0x03
- ("rax", "xmm0"),       # 0x04
- ("rax", "xmm0"),       # 0x05
- ("rdx", "xmm2"),       # 0x06
- ("rdx", "xmm2"),       # 0x07
+ ("r64src", "xmm0"),    # 0x02
+ ("rdiUNK", "xmm7"),    # 0x03
+ ("r64base", "xmm0"),   # 0x04
+ ("r64idx", "xmm0"),    # 0x05
+ ("rdxUNK", "xmm2"),    # 0x06
+ ("r64dst", "xmm2"),    # 0x07
  ("tmp0", "mm0"),       # 0x08
  ("tmp7", "mm7"),       # 0x09
  ("tmp0", "mm0"),       # 0x0a
@@ -649,7 +649,7 @@ g_str_segs = { \
     0x06: "GDT", \
     0x07: "LDT", \
     0x08: "ES", \
-    0x09: "UNK_SEG_09", \
+    0x09: "CS_USERM", \
     0x0a: "SS_USERM", \
     0x0b: "DS", \
     0x0c: "FS", \
@@ -673,7 +673,6 @@ def get_str_uop_rw_segfield_special_imms(uop, addr):
     fld_sel = (special_imm & 0xf0) >> 4
     is_special_mode = uop & 0x800000 | uop & 0x300000000000
     is_multi_flds_write = is_write_uop and (fld_sel in (0x3, 0xb))
-    
     assert(is_special_mode or is_multi_flds_write or \
            (seg_sel in g_str_segs and fld_sel in g_str_seg_field_ids))
     
@@ -932,6 +931,7 @@ def uop_disassemble(uop, uaddr):
     
     str_imms = ""
     zero_imm = "0x%08x" % 0
+    
     if is_special_imms:
         str_imms = ", ".join(get_str_uop_special_imms(uop, uaddr))
     elif is_src1_imm:
@@ -1074,9 +1074,10 @@ def process_seqword(uaddr, uop, seqword, before_uop):
     lfence_sync_ctrls = (1, 2, 3)
     oooe_sync_ctrls = (4, 5, 6, 7)
     
-    assert(uop_ctrl != 1 and uop_ctrl_uidx != 0x03)
+    assert(uop_ctrl not in (0x1, 0xa) and uop_ctrl_uidx != 0x03)
     assert(sync_ctrl_uidx != 0x03 or sync_ctrl == 0)
     assert(uop_ctrl_uidx == 0 or uop_ctrl != 0)
+    assert(uop_ctrl != 0xa)
     
     opcode = get_uop_opcode(uop)
     is_test_uop = is_uop_test(uop)
