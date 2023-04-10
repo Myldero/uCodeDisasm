@@ -201,7 +201,8 @@ def is_uop_macro_imm(uop, is_special_imm = False):
 
 def is_uop_lin_ldstad(uop):
     lin_ldstad_opcode_bits = [0xc00, 0xc03, 0xc08, 0xc09, 0xc0a,
-                               0xd00, 0xd03, 0xd08, 0xd09, 0xd0a]
+                               0xd00, 0xd03, 0xd08, 0xd09, 0xd0a,
+                               0xc06, 0xc0e]
     opcode = get_uop_opcode(uop)
     return opcode & 0xf3f in lin_ldstad_opcode_bits
 
@@ -242,7 +243,7 @@ def is_uop_ldstad(uop):
     return is_ldstad
 
 def is_uop_stad(uop):
-    sta_opcode_bits = [0x08, 0x0d, 0x28, 0x2d, 0x2e, 0x18]
+    sta_opcode_bits = [0x08, 0x0d, 0x28, 0x2d, 0x2e, 0x18, 0xe]
     opcode = get_uop_opcode(uop)
     return opcode >= 0xc00 and opcode <= 0x1000 and opcode & 0x1f in sta_opcode_bits
 
@@ -837,18 +838,25 @@ def is_uop_mmxmm(uop):
     opcode = get_uop_opcode(uop)
     non_mmxmm_opcodes = [0x608, 0x646, 0x685, 0x68a, 0x6a0, 0x6ed,
                          0x720, 0x722, 0x723, 0x7b8, 0x7ed]
-    mmxmm_opcodes = [0xcfe, 0xeae, 0xeee]
+    mmxmm_opcodes = [0xcfe, 0xeae, 0xeee, 0xcc6, 0xcce]
     if opcode in non_mmxmm_opcodes:
         return False
     if opcode >= 0x400 and opcode < 0x800:
         return True
     return opcode in mmxmm_opcodes
 
-def is_mmxmm_uop_src_mmxmm(uop):
+def is_mmxmm_uop_src0_mmxmm(uop):
     assert(is_uop_mmxmm(uop))
     opcode = get_uop_opcode(uop)
-    non_mmxmm_src_opcodes = [0x705, 0x716, 0x745, 0x746, 0x747]
+    non_mmxmm_src_opcodes = [0x705, 0x716, 0x745, 0x746, 0x747, 0xcc6, 0xcce]
     return opcode not in non_mmxmm_src_opcodes
+
+def is_mmxmm_uop_src1_mmxmm(uop):
+    assert(is_uop_mmxmm(uop))
+    opcode = get_uop_opcode(uop)
+    non_mmxmm_src_opcodes = [0xcc6, 0xcce]
+    return opcode not in non_mmxmm_src_opcodes
+
 
 def is_mmxmm_uop_dst_mmxmm(uop):
     assert(is_uop_mmxmm(uop))
@@ -913,7 +921,8 @@ def uop_disassemble(uop, uaddr):
     is_special_imms = is_uop_special_imms(uop)
     
     opcode = get_uop_opcode(uop)
-    is_src_xmm = not is_uop_ldstad(uop) and is_uop_mmxmm(uop) and is_mmxmm_uop_src_mmxmm(uop)
+    is_src0_xmm = not is_uop_ldstad(uop) and is_uop_mmxmm(uop) and is_mmxmm_uop_src0_mmxmm(uop)
+    is_src1_xmm = not is_uop_ldstad(uop) and is_uop_mmxmm(uop) and is_mmxmm_uop_src1_mmxmm(uop)
     is_dst_xmm = is_uop_mmxmm(uop) and is_mmxmm_uop_dst_mmxmm(uop)
     
     str_src0 = ""
@@ -921,11 +930,11 @@ def uop_disassemble(uop, uaddr):
     str_src2 = ""
     str_dst = ""
     if is_src0 and not is_src0_imm:
-        str_src0 = get_src_mnem(src0_sel, is_src_xmm)
+        str_src0 = get_src_mnem(src0_sel, is_src0_xmm)
     if is_src1 and not is_src1_imm:
-        str_src1 = get_src_mnem(src1_sel, is_uop_mmxmm(uop))
+        str_src1 = get_src_mnem(src1_sel, is_src1_xmm)
     if is_src2:
-        str_src2 = get_dst_mnem(dst_sel, is_dst_xmm) if dst_sel else "0x%08x" % 0
+        str_src2 = get_dst_mnem(dst_sel, is_dst_xmm) if dst_sel else "0x{:08x}".format(0)
     elif is_dst:
         str_dst = get_dst_mnem(dst_sel, is_dst_xmm)
     
@@ -949,7 +958,7 @@ def uop_disassemble(uop, uaddr):
     str_imms_first = str_imms[0] if len(str_imms) > 1 else ""
     str_imms_second = str_imms[1] if len(str_imms) > 2 else ""
     str_imms_last = str_imms[1] if len(str_imms) == 2 else str_imms[2] if len(str_imms) > 2 else str_imms[0]
-    str_srcs_list = [str_imms_first, str_src0, str_imms_second, str_src1, str_imms_last, str_src2]
+    str_srcs_list = [str_src2, str_imms_first, str_src0, str_imms_second, str_src1, str_imms_last]
     str_non_empty_srcs_list = [str_src for str_src in str_srcs_list if str_src != ""]
     str_srcs = ", ".join(str_non_empty_srcs_list)
     
